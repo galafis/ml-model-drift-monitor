@@ -1,0 +1,12 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "drift-monitor"
+    metrics_path: "/api/v1/metrics/prometheus"
+    static_configs:
+      - targets: ["app:8000"]
+        labels:
+          service: "ml-drift-monitor"
+    scrape_interval: 30s

@@ -1,0 +1,53 @@
+# ML Model Drift Monitor - Configuration
+# Environment variables take precedence over values defined here.
+
+app_name: "ml-model-drift-monitor"
+app_version: "1.0.0"
+debug: false
+log_level: "INFO"
+host: "0.0.0.0"
+port: 8000
+
+monitoring:
+  check_interval_seconds: 300
+  window_size: 1000
+  min_samples: 100
+  max_reports_stored: 500
+  enabled: true
+
+drift:
+  ks_test_threshold: 0.05
+  psi_threshold: 0.2
+  js_divergence_threshold: 0.1
+  feature_drift_fraction_threshold: 0.5
+  concept_drift_threshold: 0.05
+  adwin_delta: 0.002
+  performance_degradation_threshold: 0.1
+  trend_lookback_windows: 10
+
+storage:
+  postgres_host: "localhost"
+  postgres_port: 5432
+  postgres_db: "drift_monitor"
+  postgres_user: "drift_user"
+  postgres_password: "drift_pass"
+  redis_host: "localhost"
+  redis_port: 6379
+  redis_db: 0
+  fallback_json_dir: "./data/reports"
+  cache_ttl_seconds: 3600
+
+alerting:
+  enabled: true
+  cooldown_seconds: 600
+  max_alerts_per_hour: 20
+  channels:
+    - "log"
+  webhook_url: null
+  webhook_timeout: 10
+
+exporter:
+  prometheus_enabled: true
+  prometheus_port: 8001
+  metric_prefix: "ml_drift"
+  export_interval_seconds: 30
